@@ -1,0 +1,67 @@
+
+/* layout of save, cancel and delete buttons */
+.btn {
+    width: 100px;
+    font-size: 100%;
+}
+/* end */
+
+/* card layout*/
+.card-title {
+    font-size: 80%;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+}
+
+.card-text {
+    font-size: 70%;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+/* end */
+
+/* hover on products pictures */
+.hovered {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    height: 100%; width: 100%;
+    opacity: 0; transition: all .3s;
+    background-color: #3f3f44;
+}
+
+.imageHover:hover .hovered {
+    opacity: 0.7;
+}
+
+.hovered span {
+    color: #FFFFFF;
+    font-size: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+/* end */
+
+/* add basket layout */
+.addCart {
+    width: 40%;
+    font-size: 70%;
+}
+
+/* products quantity position in navbar */
+.navbarProductQuantity {
+    position: relative;
+    bottom: 18px;
+    left: 20px;
+}
+/* end */
+
+/* delete products button of cart */
+.deleteProductCart {
+    background-color: #FFFFFF;
+}

@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+    <div class="container w-75">
+        <div class="row mb-5">
+            <div class="col-sm-8 offset-sm-2">
+                {# affichage du panier #}
+                <h1 class="h2 mt-3 mb-3">Votre panier</h1>
+                {# si le tableau contenant les produits (items) est supérieur à 0 #}
+                {% if items | length > 0 %}
+                    {# présentation des produits ajoutés dans un tableau #}
+                    <div class="row">
+                        <div class="col-12 table-responsive-lg">
+                            <table class="table text-center">
+                                {# entête du tableau #}
+                                <thead>
+                                <tr class="table-dark">
+                                    <th>Produit</th>
+                                    <th>Référence</th>
+                                    <th>Prix</th>
+                                    <th>Quantité</th>
+                                    <th>Total</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                {# corps du tableau #}
+                                <tbody>
+                                {# boucle permettant de parcourir et d'afficher le tableau de produits #}
+                                {% for item in items %}
+                                    <tr>
+                                        {# affichage des données du produit #}
+                                        <td><img src="{{ asset('images/produit/' ~ item.product.picture) }}" class="img-fluid w-100" alt="picture" ></td>
+                                        <td>{{ item.product.ProductName }}</td>
+                                        <td>{{ item.product.UnitPrice }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.product.UnitPrice * item.quantity }}</td>
+                                        <td>
+                                            <div class="row">
+                                                {% if item.quantity == 1 %}
+                                                    <div class="col-4">
+                                                        {# bouton de suppression de produit du panier avec modal de confirmation #}
+                                                        <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn-sm p-0 text-danger border-0 deleteProductCart"
+                                                           title="ajouter ce produit au panier" data-toggle="modal" data-target="#productDelete{{item.product.id}}">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                            </svg>
+                                                        </a>
+
+                                                        {# modal de confirmation de suppression d'un produit #}
+                                                        <div class="modal fade" id="productDelete{{item.product.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                            {# début de la zone de dialogue #}
+                                                            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                                                <div class="modal-content border-warning">
+                                                                    {# titre de suppression dans l'entête du modal #}
+                                                                    {#<div class="modal-header">
+                                                                        <h5 class="modal-title text-danger" id="myModalLabel">Suppression d'un article</h5>
+                                                                        #}{# bouton de fermeture du modal #}{#
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>#}
+                                                                    {# message de confirmation dans le corps du modal #}
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <b>Êtes-vous sûr(e) de vouloir retirer cet article ?</b>
+                                                                            <div class="col-12 mt-2">
+                                                                                {# image du produit #}
+                                                                                {#{{ path('products_show', {'id': product.id}) }}#}
+                                                                                <img class="card-img img-fluid rounded w-100 mb-2" src="{{ asset('images/produit/' ~ item.product.picture) }}"
+                                                                                     alt="{{ item.product.ProductName }}" title="{{ item.product.ProductName }}">
+                                                                                {# titre du produit #}
+                                                                                <b>{{ item.product.ProductName }}</b>
+                                                                            </div>
+                                                                        </div>
+                                                                        {# boutons de contrôle #}
+                                                                        <div class="row mt-4 text-center">
+                                                                            <div class="col-12">
+                                                                                <button type="button" class="btn w-100 btn-outline-primary mb-2" data-dismiss="modal">Annuler</button>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                {#<button type="button" class="btn w-100 btn-danger" title="suppression">Supprimer</button>#}
+                                                                                <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn w-100 btn-danger"
+                                                                                   title="suppression">Supprimer
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    {# bouton de retrait de produit du panier #}
+                                                    <div class="col-4">
+                                                        <a href="{{ path('cart_withdrawal', {'id': item.product.id}) }}" class="text-success js-cart-withdrawal">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
+                                                {# bouton d'ajout de produit du panier #}
+                                                <div class="col-4">
+                                                    <a href="{{ path('cart_add', {'id': item.product.id}) }}" class="text-success">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                        </svg>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {# calcul du prix total HT des produits du panier #}
+                        <div class="col-12">
+                            <div class="col-xs-6 offset-xs-3 text-center mt-3">
+                                <b>Total HT </b>
+                                ({% if total_quantity == 1 %}
+                                    {{ total_quantity }} article
+                                {% else %}
+                                    {{ total_quantity }} articles
+                                {% endif %})
+                                <b>: {{ total }} €</b>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-lg-6 offset-lg-3 text-center mt-3">
+                                {# bouton d'ajout de produits dans le panier avec un modal de confirmation #}
+                                <button type="button" class="btn-sm btn-success rounded w-75" title="Passer la commande">Passer la commande</button>
+                            </div>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <div class="row">
+                        <div class="col-sm-6 offset-3 mb-5">
+                            {# sinon inviter le client à ajouter un produit #}
+                            <p class="mt-5 text-center"><b>votre panier est vide</b></p>
+                            <p class="mt-5 text-center text-info"><b>Achetez les offres du jour</b></p>
+                        </div>
+                        <div class="col-sm-6 offset-3 text-center">
+                            {# bouton d'accès au compte perso #}
+                            <button type="button" class="btn-sm w-100 btn-warning rounded mb-2" title="Se Connecter">Connectez-vous à votre compte</button>
+                            {# bouton d'inscription #}
+                            <button type="button" class="btn-sm w-100 btn-light rounded" title="S'inscrire">Inscrivez-vous maintenant</button>
+                        </div>
+                    </div>
+                {% endif%}
+            </div>
+        </div>
+    </div>
+{% endblock %}

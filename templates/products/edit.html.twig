@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Products{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-sm-8 offset-sm-2">
+                <h1 class="h4 mt-4 mb-3">Mise à jour</h1>
+                {{ include('products/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            </div>
+            <div class="col-sm-8 offset-sm-2">
+                <div class="mt-2">
+                    {{ include('products/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div
+{% endblock %}

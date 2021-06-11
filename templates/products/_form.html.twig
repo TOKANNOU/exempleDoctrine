@@ -1,0 +1,57 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}})  }}
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.ProductName) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.SupplierID) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.CategoryID) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.QuantityPerUnit) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.UnitPrice) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(form.UnitsInStock) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.UnitsOnOrder) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.ReorderLevel) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.Discontinued) }}
+        </div>
+        <div class="col-md-12">
+            {{ form_row(form.picture2) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <img src="{{ asset('images/produit/' ~ product.picture) }}" class="img-fluid w-25" alt="picture" >
+        </div>
+        <div class="col-md-12 mt-4">
+            <button class="btn btn-dark p-1">{{ button_label|default('Sauvegarder') }}</button>
+        </div>
+        <div class="col-md-12 mt-2">
+            <a class="btn btn-info p-1" href="{{ path('products_index') }}">Annuler</a>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+
+{#{{ form_start(form) }}
+    {{ form_widget(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <button class="btn btn-dark">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}#}
